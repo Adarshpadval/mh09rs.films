@@ -1,0 +1,167 @@
+/* ==========================================================================
+   MH09RS FILMS — RESPONSIVE STYLING
+   ========================================================================== */
+
+/* Laptop & Desktop adjustments (1200px and below) */
+@media (max-width: 1200px) {
+  .featured-films-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .film-card-large {
+    grid-column: span 2;
+    height: 480px;
+  }
+  .film-card-medium {
+    grid-column: span 1;
+    height: 440px;
+  }
+  .film-card-wide {
+    grid-column: span 2;
+    height: 440px;
+  }
+  .services-grid, .travel-grid, .packages-grid {
+    gap: 1.5rem;
+  }
+  .footer-top {
+    grid-template-columns: 1.5fr 1fr 1fr;
+  }
+}
+
+/* Tablet Screens (992px and below) */
+@media (max-width: 992px) {
+  :root {
+    --header-height: 72px;
+  }
+
+  .nav-menu, .nav-actions .btn-sm {
+    display: none;
+  }
+
+  .menu-toggle {
+    display: block;
+  }
+
+  .studio-grid {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+
+  .studio-image-card img {
+    height: 450px;
+  }
+
+  .services-grid, .travel-grid, .packages-grid {
+    grid-template-columns: 1fr;
+    max-width: 580px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .masonry-gallery {
+    column-count: 2;
+  }
+
+  .process-timeline {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+
+  .contact-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .footer-top {
+    grid-template-columns: 1fr 1fr;
+    gap: 2.5rem;
+  }
+
+  /* Disable custom cursor on touch/tablets */
+  .custom-cursor-dot, .custom-cursor-follower {
+    display: none !important;
+  }
+}
+
+/* Mobile Screens (768px and below) */
+@media (max-width: 768px) {
+  .film-card-large, .film-card-medium, .film-card-wide {
+    grid-column: span 2;
+    height: 380px;
+  }
+
+  .masonry-gallery {
+    column-count: 1;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+  .form-group-full {
+    grid-column: span 1;
+  }
+
+  .hero-footer-bar {
+    flex-direction: column;
+    gap: 0.75rem;
+    align-items: center;
+    text-align: center;
+    bottom: 1.5rem;
+  }
+
+  .hero-scroll-indicator {
+    display: none;
+  }
+
+  .footer-top {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .footer-bottom {
+    flex-direction: column;
+    gap: 1rem;
+    text-align: center;
+  }
+
+  .floating-whatsapp {
+    bottom: 1.25rem;
+    right: 1.25rem;
+    padding: 0.75rem 1.15rem;
+    font-size: 0.785rem;
+  }
+
+  .floating-whatsapp span.wa-text {
+    display: none;
+  }
+
+  .floating-whatsapp {
+    border-radius: 50%;
+    width: 56px;
+    height: 56px;
+    padding: 0;
+    justify-content: center;
+  }
+
+  .floating-whatsapp .wa-pulse {
+    display: none;
+  }
+}
+
+/* Extra Small Phones (360px - 420px) */
+@media (max-width: 420px) {
+  .hero-cta-group {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .hero-cta-group .btn {
+    width: 100%;
+  }
+
+  .film-card-large, .film-card-medium, .film-card-wide {
+    height: 320px;
+  }
+
+  .booking-form-box {
+    padding: 1.75rem 1.25rem;
+  }
+}
