@@ -18,7 +18,7 @@ There are no card shadows, gradient overlays, preloaders, or custom cursors. Sel
 - `assets/css/style.css`: tokens and components.
 - `assets/css/responsive.css`: responsive grid changes.
 - `assets/css/animations.css`: photo shutters, viewfinder framing, and reduced-motion preference.
-- `assets/js/animations.js`: image reveal observation and bounded desktop parallax.
+- `assets/js/animations.js`: image reveals, bounded desktop parallax, and scroll-driven film transport.
 - `assets/js/main.js`: accessible mobile navigation and current year.
 - `assets/js/portfolio.js`: immediate filtering and keyboard-accessible photo viewer.
 - `assets/js/contact.js`: form validation and WhatsApp handoff.
@@ -32,6 +32,8 @@ The enquiry form validates the required details and phone length, prepares a mes
 Gallery filters update immediately and announce the visible count. Photo dialogs support Previous/Next, arrow keys, Escape, and focus restoration. At 960px and below, the header shows the studio identity and one Menu button, with booking inside the menu. The mobile navigation closes on Escape or link selection and prevents interaction with the obscured page. Returning to desktop closes it and restores scrolling.
 
 Featured films currently link to the studio YouTube channel because the previous embed IDs were placeholders. Replace each film link with its actual watch URL when available.
+
+Home and About include a camera reel sequence: native vertical scrolling opens a circular lens gate and advances a horizontal filmstrip, with sprocket edges, a rotating transport wheel, and a frame counter. Scrolling back reverses the sequence. The section uses a short sticky stage, supports touch scrolling, and includes a skip link. Reduced-motion users get a normal horizontally scrollable gallery with keyboard access.
 
 ## Content before publication
 
