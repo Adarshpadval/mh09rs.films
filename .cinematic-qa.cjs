@@ -10,6 +10,10 @@ fs.readFile(file,(e,b)=>{res.writeHead(e?404:200,{'Content-Type':({'.html':'text
 await new Promise(r=>server.listen(4173,'127.0.0.1',r));
 const browser=await chromium.launch({channel:'msedge',headless:true});
 const page=await browser.newPage();const errors=[];page.on('pageerror',e=>errors.push(e.message));
+await page.addInitScript(()=>{
+ window.layoutShifts=[];
+ new PerformanceObserver(list=>{for(const entry of list.getEntries())if(!entry.hadRecentInput)window.layoutShifts.push(entry.value);}).observe({type:'layout-shift',buffered:true});
+});
 const shots=os.tmpdir(); const results=[];
 async function atProgress(id,p){
  const y=await page.evaluate(({id,p})=>{const t=ScrollTrigger.getById(id);if(!t)throw Error('Missing trigger '+id);return t.start+(t.end-t.start)*p;},{id,p});
@@ -19,7 +23,7 @@ async function atProgress(id,p){
 try{
 for(const width of [320,390,768,1024,1440]){
  await page.setViewportSize({width,height:900});
- for(const file of ['index.html','pages/about.html','pages/portfolio.html']){
+ for(const file of ['index.html','pages/about.html','pages/portfolio.html','pages/services.html','pages/contact.html']){
   await page.goto('http://127.0.0.1:4173/'+file);await page.evaluate(()=>document.fonts.ready);await page.waitForTimeout(150);
   const state=await page.evaluate(()=>({overflow:document.documentElement.scrollWidth>innerWidth,h1:document.querySelectorAll('h1').length,items:document.querySelectorAll('.gallery-item').length,broken:[...document.images].filter(i=>i.getAttribute('src')&&i.complete&&!i.naturalWidth).map(i=>i.src)}));
   if(state.overflow||state.h1!==1||state.broken.length)throw Error(JSON.stringify({width,file,state}));
@@ -31,6 +35,7 @@ await page.goto('http://127.0.0.1:4173/index.html');await page.evaluate(()=>docu
 const blade0=await page.locator('.iris-blade').first().getAttribute('d');
 await atProgress('camera-opening',0);
 await page.screenshot({path:path.join(shots,'mh09rs-lens-closed.png')});
+const initialCLS=await page.evaluate(()=>window.layoutShifts.reduce((a,b)=>a+b,0));
 await atProgress('camera-opening',.35);
 const blade1=await page.locator('.iris-blade').first().getAttribute('d');
 if(blade0===blade1)throw Error('Aperture blades did not move');
@@ -79,7 +84,22 @@ await fallback.goto('http://127.0.0.1:4173/index.html');
 if(await fallback.evaluate(()=>document.documentElement.classList.contains('cinematic-js')))throw Error('Library failure fallback failed');
 await page.setViewportSize({width:844,height:390});
 if(await page.evaluate(()=>document.documentElement.classList.contains('cinematic-js')))throw Error('Landscape fallback failed');
-console.log(JSON.stringify({results,errors,interactions:'aperture, reversal, transport, reduced motion, pause, filters, dialog, menu, no-JS, blocked vendor, landscape: PASS',screenshots:shots},null,2));
+const brokenLinks=[];
+for(const file of ['index.html','pages/about.html','pages/portfolio.html','pages/services.html','pages/contact.html']){
+ const html=fs.readFileSync(file,'utf8');
+ for(const m of html.matchAll(/(?:src|href)="([^"]+)"/g)){
+  if(/^(https?:|mailto:|tel:|data:)/.test(m[1]))continue;
+  const [relative,hash]=m[1].split('#');
+  const target=relative?path.resolve(path.dirname(file),decodeURIComponent(relative)):path.resolve(file);
+  if(!fs.existsSync(target))brokenLinks.push(file+': '+m[1]);
+  else if(hash && path.extname(target)==='.html'&&!fs.readFileSync(target,'utf8').includes('id="'+hash+'"'))brokenLinks.push(file+': '+m[1]);
+ }
+ for(const m of html.matchAll(/srcset="([^"]+)"/g))for(const candidate of m[1].split(',')){
+  if(!fs.existsSync(path.resolve(path.dirname(file),candidate.trim().split(' ')[0])))brokenLinks.push(candidate);
+ }
+}
+if(brokenLinks.length)throw Error(JSON.stringify(brokenLinks));
+console.log(JSON.stringify({results,errors,initialCLS,brokenLinks,interactions:'aperture, reversal, transport, reduced motion, pause, filters, dialog, menu, no-JS, blocked vendor, landscape: PASS',screenshots:shots},null,2));
 if(errors.length)throw Error(errors.join('\n'));
 }finally{await browser.close();server.close();}
 })().catch(e=>{console.error(e);server.close();process.exitCode=1;});
