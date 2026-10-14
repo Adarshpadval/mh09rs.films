@@ -1,105 +1,41 @@
-# MH09RS Films — Cinematic Wedding Photography & Cinematography
+# MH09RS Films
 
-A world-class, premium wedding cinematography and photography portfolio website for **MH09RS Films**, founded and directed by **Rohit Suryawanshi** in Kolhapur, Maharashtra, India.
+Static wedding film and photography portfolio for Rohit Suryawanshi, Kolhapur.
 
----
+## Design
 
-## 🌟 Brand & Visual Direction
+Warm paper (`#fbfaf7`), charcoal (`#111111`), and vermillion (`#b83224`). The layout uses a 12-column grid, an asymmetric 5–2–5 hero, staggered images, and continuous bordered service/package rows. Plus Jakarta Sans supplies the main typography; JetBrains Mono supplies functional labels. The original white PNG logo sits on a charcoal panel.
 
-- **Brand:** MH09RS Films
-- **Founder & Cinematographer:** Rohit Suryawanshi
-- **Base:** Kolhapur, Maharashtra, India (serving Kolhapur, Sangli, Pune, Western Ghats, and worldwide)
-- **Primary Specializations:** Luxury Wedding Cinematography, Candid Wedding Photography, Pre-Wedding Films, Drone Perspectives, and Western Ghats Nature Documentaries.
-- **Palette:** `#0A0A0A` (Deep Cinematic Black), `#111111` (Secondary), `#FFFFFF` (White), `#B8B8B8` (Muted), `#D97706` (Warm Amber Gold Accent).
-- **Typography:** *Cormorant Garamond* (Editorial Serif) paired with *Plus Jakarta Sans* and *Cinzel*.
+There are no card shadows, gradient overlays, preloaders, custom cursors, or scroll-reveal dependencies. Content remains visible without animation. The layout adapts from desktop to 320px screens.
 
----
+## Pages and source
 
-## 🛠️ Technology Stack
+- `index.html`: homepage, selected films, six selected photographs, services, enquiry.
+- `pages/portfolio.html`: full gallery with category filters and native dialog viewer.
+- `pages/about.html`: studio introduction, approach, expandable FAQs.
+- `pages/services.html`: service detail and package ledger.
+- `pages/contact.html`: contact information and WhatsApp enquiry.
+- `assets/css/style.css`: tokens and components.
+- `assets/css/responsive.css`: responsive grid changes.
+- `assets/css/animations.css`: reduced-motion preference.
+- `assets/js/main.js`: accessible mobile navigation and current year.
+- `assets/js/portfolio.js`: immediate filtering and keyboard-accessible photo viewer.
+- `assets/js/contact.js`: form validation and WhatsApp handoff.
 
-- **HTML5:** Semantic, accessible, and structured for optimal SEO and crawlability.
-- **Modern CSS3:** Vanilla CSS variables, responsive typography using `clamp()`, glassmorphism, flexbox, CSS grid, and GPU-accelerated transforms.
-- **Vanilla JavaScript (ES6+):** Lightweight motion system, custom cursor, IntersectionObserver scroll reveals, filterable masonry gallery, fullscreen lightbox, modal video viewer, and interactive WhatsApp booking engine.
-- **100% Static & Serverless:** Zero build tools, zero dependencies, zero databases. Instant load times and effortless static hosting.
+No build step or production dependencies. Serve this folder with a static HTTP server or deploy its contents to the existing static host. Keep the relative directory structure intact. Fonts load from Google Fonts and have local fallback families.
 
----
+## Interactions
 
-## 📁 Repository Structure
+The enquiry form validates the required details and phone length, prepares a message, and opens WhatsApp for the visitor to review and send. A fallback link remains visible if a popup is blocked. No enquiry is sent automatically.
 
-```text
-MH09_RS_Films/
-├── index.html                   # Cinematic homepage (all 12 master sections)
-├── pages/
-│   ├── portfolio.html           # Full photographic gallery & archives
-│   ├── about.html               # The story of Rohit Suryawanshi & studio philosophy
-│   ├── services.html            # Deliverables, packages, & investment details
-│   └── contact.html             # Dedicated WhatsApp inquiry & booking hub
-├── assets/
-│   ├── css/
-│   │   ├── style.css            # Core luxury design system tokens & layouts
-│   │   ├── animations.css       # Preloader, cursor, parallax & keyframes
-│   │   └── responsive.css       # Mobile-first breakpoints (360px to 1920px)
-│   ├── js/
-│   │   ├── main.js              # Preloader, sticky header, modal player, year
-│   │   ├── animations.js        # Custom cursor follower & scroll observer
-│   │   ├── portfolio.js         # Category filters & photo lightbox
-│   │   └── contact.js           # Instant pre-filled WhatsApp booking generator
-│   └── images/                  # High-resolution optimized wedding & travel assets
-├── .nojekyll                    # Ensures correct static routing on GitHub Pages
-├── robots.txt                   # Search crawler directives
-├── sitemap.xml                  # XML sitemap for Google Search Console
-├── ASSET-GUIDE.md               # Guide for updating images & YouTube links
-└── README.md                    # Project documentation & deployment guides
-```
+Gallery filters update immediately and announce the visible count. Photo dialogs support Previous/Next, arrow keys, Escape, and focus restoration. The mobile navigation closes on Escape or link selection and prevents interaction with the obscured page.
 
----
+Featured films currently link to the studio YouTube channel because the previous embed IDs were placeholders. Replace each film link with its actual watch URL when available.
 
-## 🚀 Deployment Guide
+## Content before publication
 
-### Phase 1: Deploy to GitHub Pages
+Existing showcase photographs remain provisional, including the filmmaker portrait. See [ASSET-GUIDE.md](ASSET-GUIDE.md). Replace them with the studio’s own work, adjust captions and alternative text to match, and confirm package details and delivery timelines. The previous unverified testimonial and popularity badge have been removed.
 
-1. Push this repository to GitHub:
-   ```bash
-   git add .
-   git commit -m "feat: complete cinematic portfolio website for MH09RS Films"
-   git branch -M main
-   git push -u origin main
-   ```
-2. Navigate to your repository settings on GitHub:
-   - Go to **Settings** > **Pages**.
-   - Under **Build and deployment** > **Source**, choose **Deploy from a branch**.
-   - Select **Branch: main** and folder **/ (root)**.
-   - Click **Save**.
-3. Your website will be live in minutes at:  
-   `https://adarshpadval.github.io/mh09rs.films/`
+## Verification
 
-### Phase 2: Deploy to Hostinger Shared Hosting
-
-1. Log into your Hostinger hPanel.
-2. Open **File Manager** for your domain (e.g. `mh09rsfilms.com`).
-3. Open the `public_html/` root directory.
-4. Upload all files from this project into `public_html/` (`index.html`, `pages/`, `assets/`, `robots.txt`, `sitemap.xml`).
-5. Ensure HTTPS (SSL) is turned on in hPanel.
-6. Your website is instantly live with zero configuration needed.
-
----
-
-## 📱 WhatsApp Booking Flow
-
-The website features an automated WhatsApp booking engine:
-1. Visitors complete the inquiry form with event date, venue, guest count, and service preferences.
-2. Client-side JavaScript validates inputs and composes a formatted, URL-encoded inquiry message.
-3. Clicking **CHAT ON WHATSAPP** launches `https://wa.me/919595222860` with the pre-filled message ready to send.
-4. No database or external CRM required — all conversations happen directly inside WhatsApp.
-
----
-
-## 📸 Asset Customization
-
-See [`ASSET-GUIDE.md`](./ASSET-GUIDE.md) for full instructions on replacing photos, updating YouTube video IDs, and tailoring package offerings.
-
----
-
-## 📄 License & Attribution
-
-Designed & Developed for **MH09RS Films** by Adarsh. Directed by Rohit Suryawanshi. All photographs and media assets reserved by their respective copyright holders.
+Checked in headless Microsoft Edge at 1440px, 768px, 390px, and 320px. Checks cover page overflow, image loading, heading structure, internal links, menu behaviour, gallery filtering, photo dialog controls, FAQ expansion, and a mocked WhatsApp handoff. No message was sent.

@@ -11,7 +11,7 @@ All images are stored in `assets/images/` with clean filenames. To update an ima
 
 | Filename | Purpose | Recommended Resolution | Aspect Ratio |
 | :--- | :--- | :--- | :--- |
-| `hero-poster.jpg` | Homepage Hero background cover image | 1920 × 1080 px | 16:9 |
+| `hero-poster.jpg` | Homepage split hero photograph | 1600 × 2000 px | Portrait crop; keep faces near the centre |
 | `filmmaker-rohit.jpg` | Rohit Suryawanshi filmmaker portrait | 1000 × 1400 px | 3:4 or 4:5 |
 | `film-story-01.jpg` | Featured Film 01 (The Wedding Film) | 1600 × 900 px | 16:9 |
 | `film-story-02.jpg` | Featured Film 02 (Before Forever) | 1200 × 900 px | 4:3 or 16:9 |
@@ -36,38 +36,24 @@ All images are stored in `assets/images/` with clean filenames. To update an ima
 
 ---
 
-## 2. Updating YouTube Video Links & Film Modal
+## 2. Updating YouTube Film Links
 
-The featured film cards in `index.html` play videos inside a cinematic lightbox modal.
+The featured film entries in `index.html` are ordinary links to the studio’s YouTube channel. Previous placeholder embed IDs have been removed.
 
-To update the video, locate the `data-video-id` attribute on each film card in `index.html`:
-
-```html
-<!-- Example: YouTube link is https://www.youtube.com/watch?v=AbCdEfGhIjK -->
-<!-- The video ID is 'AbCdEfGhIjK' -->
-
-<article class="film-card film-card-large" 
-  data-video-id="YOUR_YOUTUBE_VIDEO_ID" 
-  data-title="Your Film Title">
-  ...
-</article>
-```
-
-When a user clicks any film card, the site automatically opens an ad-free, responsive video player with your YouTube video.
-
----
+Replace the `href` on each `a.film-card` with the real film URL, for example `https://www.youtube.com/watch?v=YOUR_VIDEO_ID`. Update the title, location, thumbnail, and accessible label together. Links open in a new tab. Travel imagery is a static showcase with a separate channel link.
 
 ## 3. Modifying Contact & WhatsApp Details
 
 The WhatsApp number is configured across HTML links and the JS engine:
 - WhatsApp number: `+91 95952 22860`
-- To update the target recipient number, change `WA_PHONE_NUMBER = '919595222860'` in `assets/js/contact.js` and the `wa.me` links in `index.html` and `pages/*.html`.
+- To update the target recipient number, change the `https://wa.me/919595222860?text=` URL in `assets/js/contact.js` and the `wa.me` links in `index.html` and `pages/*.html`.
 
 ---
 
 ## 4. Pre-Launch Checklist for Rohit
 
 - [ ] Confirm high-resolution poster images for `hero-poster.jpg`.
-- [ ] Add your preferred YouTube video IDs to `index.html`.
-- [ ] Add genuine client testimonials into the testimonial section in `index.html`.
+- [ ] Replace channel links with each featured film’s actual YouTube watch URL.
+- [ ] Replace all temporary showcase photos, including the founder portrait, with approved studio assets and accurate captions.
+- [ ] Confirm the package inclusions, delivery times, and location descriptions.
 - [ ] Test the WhatsApp form with a sample inquiry on both desktop and mobile.

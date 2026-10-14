@@ -1,112 +1,58 @@
-/**
- * MH09RS FILMS — PORTFOLIO GALLERY & LIGHTBOX
- */
-
 document.addEventListener('DOMContentLoaded', () => {
-  initGalleryFilters();
-  initPhotoLightbox();
-});
-
-/* --------------------------------------------------------------------------
- * 1. GALLERY CATEGORY FILTERING
- * -------------------------------------------------------------------------- */
-function initGalleryFilters() {
-  const filterButtons = document.querySelectorAll('.filter-btn');
-  const galleryItems = document.querySelectorAll('.gallery-item');
-
-  if (!filterButtons.length || !galleryItems.length) return;
-
-  filterButtons.forEach(btn => {
-    btn.addEventListener('click', () => {
-      filterButtons.forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-
-      const filterValue = btn.getAttribute('data-filter');
-
-      galleryItems.forEach(item => {
-        const itemCategory = item.getAttribute('data-category');
-        if (filterValue === 'all' || itemCategory === filterValue) {
-          item.style.display = 'block';
-          setTimeout(() => {
-            item.style.opacity = '1';
-            item.style.transform = 'scale(1)';
-          }, 30);
-        } else {
-          item.style.opacity = '0';
-          item.style.transform = 'scale(0.96)';
-          setTimeout(() => {
-            item.style.display = 'none';
-          }, 250);
-        }
-      });
+  const items = [...document.querySelectorAll('.gallery-item')];
+  const filters = [...document.querySelectorAll('.filter-btn')];
+  const gallery = document.querySelector('.masonry-gallery');
+  const status = document.querySelector('.gallery-status');
+  const dialog = document.getElementById('photoLightbox');
+  const visibleItems = () => items.filter(item => !item.hidden);
+  function updateStatus() {
+    if (status) status.textContent = String(visibleItems().length).padStart(2, '0') + ' photographs / select to enlarge';
+  }
+  filters.forEach(button => button.addEventListener('click', () => {
+    const category = button.dataset.filter;
+    filters.forEach(filter => {
+      const active = filter === button;
+      filter.classList.toggle('active', active);
+      filter.setAttribute('aria-pressed', String(active));
     });
+    items.forEach(item => { item.hidden = category !== 'all' && item.dataset.category !== category; });
+    gallery?.classList.toggle('is-filtered', category !== 'all');
+    updateStatus();
+  }));
+  updateStatus();
+  if (!dialog) return;
+  const photo = dialog.querySelector('.lightbox-image');
+  const caption = dialog.querySelector('.lightbox-caption');
+  let current = null;
+  let trigger = null;
+  function show(item) {
+    current = item;
+    const source = item.querySelector('img');
+    photo.src = source.src;
+    photo.alt = source.alt;
+    caption.textContent = item.querySelector('.gallery-caption-title').textContent + ' / ' +
+      String(visibleItems().indexOf(item) + 1).padStart(2, '0') + ' of ' + visibleItems().length;
+  }
+  function advance(direction) {
+    const active = visibleItems();
+    show(active[(active.indexOf(current) + direction + active.length) % active.length]);
+  }
+  items.forEach(item => item.addEventListener('click', () => {
+    trigger = item;
+    show(item);
+    dialog.showModal();
+    document.body.style.overflow = 'hidden';
+  }));
+  dialog.querySelector('.lightbox-close').addEventListener('click', () => dialog.close());
+  dialog.querySelector('.lightbox-prev').addEventListener('click', () => advance(-1));
+  dialog.querySelector('.lightbox-next').addEventListener('click', () => advance(1));
+  dialog.addEventListener('click', event => { if (event.target === dialog) dialog.close(); });
+  dialog.addEventListener('keydown', event => {
+    if (event.key === 'ArrowLeft') { event.preventDefault(); advance(-1); }
+    if (event.key === 'ArrowRight') { event.preventDefault(); advance(1); }
   });
-}
-
-/* --------------------------------------------------------------------------
- * 2. FULLSCREEN PHOTOGRAPHY LIGHTBOX
- * -------------------------------------------------------------------------- */
-function initPhotoLightbox() {
-  const lightbox = document.getElementById('photoLightbox');
-  const galleryItems = document.querySelectorAll('.gallery-item');
-  if (!lightbox || !galleryItems.length) return;
-
-  const lightboxImg = lightbox.querySelector('.lightbox-image');
-  const lightboxCaption = lightbox.querySelector('.lightbox-caption');
-  const closeBtn = lightbox.querySelector('.lightbox-close');
-  const prevBtn = lightbox.querySelector('.lightbox-prev');
-  const nextBtn = lightbox.querySelector('.lightbox-next');
-
-  let currentIndex = 0;
-  const itemsArray = Array.from(galleryItems);
-
-  const showImage = (index) => {
-    if (index < 0) index = itemsArray.length - 1;
-    if (index >= itemsArray.length) index = 0;
-    currentIndex = index;
-
-    const currentItem = itemsArray[currentIndex];
-    const imgEl = currentItem.querySelector('img');
-    const titleEl = currentItem.querySelector('.gallery-caption-title');
-    const tagEl = currentItem.querySelector('.gallery-caption-tag');
-
-    if (lightboxImg && imgEl) {
-      lightboxImg.src = imgEl.src;
-      lightboxImg.alt = imgEl.alt || 'MH09RS Films';
-    }
-
-    if (lightboxCaption) {
-      const title = titleEl ? titleEl.textContent : '';
-      const tag = tagEl ? tagEl.textContent : '';
-      lightboxCaption.innerHTML = `<strong>${title}</strong> <span>· ${tag}</span>`;
-    }
-  };
-
-  itemsArray.forEach((item, idx) => {
-    item.addEventListener('click', () => {
-      showImage(idx);
-      lightbox.classList.add('active');
-      document.body.style.overflow = 'hidden';
-    });
-  });
-
-  const closeLightbox = () => {
-    lightbox.classList.remove('active');
+  dialog.addEventListener('close', () => {
     document.body.style.overflow = '';
-  };
-
-  if (closeBtn) closeBtn.addEventListener('click', closeLightbox);
-  if (prevBtn) prevBtn.addEventListener('click', () => showImage(currentIndex - 1));
-  if (nextBtn) nextBtn.addEventListener('click', () => showImage(currentIndex + 1));
-
-  lightbox.addEventListener('click', (e) => {
-    if (e.target === lightbox) closeLightbox();
+    trigger?.focus();
   });
-
-  document.addEventListener('keydown', (e) => {
-    if (!lightbox.classList.contains('active')) return;
-    if (e.key === 'Escape') closeLightbox();
-    if (e.key === 'ArrowLeft') showImage(currentIndex - 1);
-    if (e.key === 'ArrowRight') showImage(currentIndex + 1);
-  });
-}
+});

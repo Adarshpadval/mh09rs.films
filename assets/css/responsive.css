@@ -1,238 +1,87 @@
-/* ==========================================================================
-   MH09RS FILMS — RESPONSIVE STYLING
-   ========================================================================== */
-
-/* Laptop & Desktop (1200px and below) */
-@media (max-width: 1200px) {
-  .featured-films-grid {
-    grid-template-columns: 1fr 1fr;
-  }
-  .film-card-large {
-    grid-column: span 2;
-    height: 460px;
-  }
-  .film-card-medium {
-    grid-column: span 1;
-    height: 420px;
-  }
-  .film-card-wide {
-    grid-column: span 2;
-    height: 420px;
-  }
-  .services-grid {
-    grid-template-columns: 1fr 1fr;
-    gap: 1.25rem;
-  }
-  .services-grid .service-card:last-child {
-    grid-column: span 2;
-  }
-  .travel-grid {
-    grid-template-columns: 1fr 1fr;
-    gap: 1.25rem;
-  }
-  .travel-grid .travel-card:last-child {
-    grid-column: span 2;
-  }
-  .packages-grid {
-    gap: 1.25rem;
-  }
-  .footer-top {
-    grid-template-columns: 1.5fr 1fr 1fr;
-  }
+@media(min-width:1700px) { .hero-section { min-height:780px; } }
+@media(max-width:1100px) {
+ .nav-menu { gap:16px; } .brand-name { display:none; }
+ .hero-title { font-size:clamp(48px,6vw,76px); }
+ .hero-content { padding-inline:20px; } .hero-media-wrapper { margin-right:20px; }
+ .process-timeline { margin-left:12%; }
+ .footer-top>:first-child,.footer-top>:nth-child(4) { grid-column:span 4; }
 }
-
-/* Tablet Screens (992px and below) */
-@media (max-width: 992px) {
-  :root {
-    --header-height: 90px;
-  }
-
-  .brand-logo img,
-  .brand-logo-img {
-    height: 70px;
-  }
-
-  .site-header.scrolled .brand-logo img,
-  .site-header.scrolled .brand-logo-img {
-    height: 56px;
-  }
-
-  .nav-menu, .nav-actions .btn-sm {
-    display: none;
-  }
-
-  .menu-toggle {
-    display: block;
-  }
-
-  .hero-content {
-    max-width: 580px;
-    padding: 2rem clamp(1.5rem, 6%, 4rem);
-  }
-
-  .studio-grid {
-    grid-template-columns: 1fr;
-    gap: 2.5rem;
-  }
-
-  .studio-image-card img {
-    height: 420px;
-  }
-
-  .studio-content-col {
-    padding-top: 0;
-  }
-
-  .services-grid {
-    grid-template-columns: 1fr;
-    max-width: 540px;
-    margin-left: auto;
-    margin-right: auto;
-  }
-  .services-grid .service-card:last-child {
-    grid-column: span 1;
-  }
-
-  .travel-grid {
-    grid-template-columns: 1fr;
-    max-width: 540px;
-    margin-left: auto;
-    margin-right: auto;
-  }
-  .travel-grid .travel-card:last-child {
-    grid-column: span 1;
-  }
-
-  .packages-grid {
-    grid-template-columns: 1fr;
-    max-width: 480px;
-    margin-left: auto;
-    margin-right: auto;
-  }
-
-  .masonry-gallery {
-    column-count: 2;
-  }
-
-  .process-timeline {
-    grid-template-columns: 1fr;
-    gap: 2rem;
-  }
-
-  .contact-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .footer-top {
-    grid-template-columns: 1fr 1fr;
-    gap: 2rem;
-  }
+@media(max-width:800px) {
+ .nav-menu { display:none; } .brand-name,.menu-toggle { display:block; }
+ .hero-content { grid-column:1/7; padding-top:40px; }
+ .hero-title { font-size:clamp(42px,6.3vw,60px); }
+ .hero-poster-img { min-height:400px; }
+ .hero-image-caption { flex-direction:column; font-size:8px; }
+ .studio-image-col { grid-column:1/6; } .studio-content-col { padding-top:0; }
+ .studio-quote { font-size:32px; }
+ .film-card-medium { grid-column:8/13; margin-top:80px; }
+ .film-card-bottom h3 { font-size:25px; }
+ .process-timeline { margin-left:0; } .service-body { grid-column:5/13; }
+ .contact-info-col { grid-column:1/-1; padding:0; }
+ .contact-grid>:last-child { grid-column:1/-1; margin-top:36px; }
+ .footer-top>:first-child,.footer-top>:nth-child(3) { grid-column:span 7; }
+ .footer-top>:nth-child(2),.footer-top>:nth-child(4) { grid-column:span 5; }
 }
-
-/* Mobile Screens (768px and below) */
-@media (max-width: 768px) {
-  :root {
-    --header-height: 84px;
-  }
-
-  .brand-logo img,
-  .brand-logo-img {
-    height: 64px;
-  }
-
-  .footer-brand-logo {
-    height: 80px;
-  }
-
-  .hero-content {
-    max-width: 100%;
-    padding: 2rem 1.5rem;
-  }
-
-  .film-card-large, .film-card-medium, .film-card-wide {
-    grid-column: span 2;
-    height: 340px;
-  }
-
-  .masonry-gallery {
-    column-count: 1;
-  }
-
-  .form-grid {
-    grid-template-columns: 1fr;
-  }
-  .form-group-full {
-    grid-column: span 1;
-  }
-
-  .hero-footer-bar {
-    flex-direction: column;
-    gap: 0.75rem;
-    align-items: flex-start;
-    padding-left: 1.5rem;
-    bottom: 1.5rem;
-  }
-
-  .hero-scroll-indicator {
-    display: none;
-  }
-
-  .footer-top {
-    grid-template-columns: 1fr;
-    gap: 2rem;
-  }
-
-  .footer-bottom {
-    flex-direction: column;
-    gap: 0.75rem;
-    text-align: center;
-  }
-
-  .floating-whatsapp {
-    bottom: 1.25rem;
-    right: 1.25rem;
-    padding: 0.75rem;
-    font-size: 0;
-    width: 48px;
-    height: 48px;
-    justify-content: center;
-  }
-
-  .floating-whatsapp span.wa-text {
-    display: none;
-  }
-
-  /* Generous section spacing on mobile */
-  .section {
-    padding-top: 4.5rem;
-    padding-bottom: 4.5rem;
-  }
-  #studio-intro { padding-top: 4.5rem; padding-bottom: 4.5rem; }
-  #featured-films { padding-top: 5.5rem; padding-bottom: 4.5rem; }
-  #photography-gallery { padding-top: 4.5rem; padding-bottom: 5rem; }
-  #travel-section { padding-top: 5.5rem; padding-bottom: 4.5rem; }
-  #services-section { padding-top: 4.5rem; padding-bottom: 5rem; }
-  #process-section { padding-top: 4.5rem; padding-bottom: 4.5rem; }
-  #testimonials-section { padding-top: 5rem; padding-bottom: 5rem; }
-  #packages-section { padding-top: 5rem; padding-bottom: 4.5rem; }
-  #contact-section { padding-top: 5rem; padding-bottom: 5rem; }
+@media(max-width:600px) {
+ html { scroll-padding-top:90px; }
+ .nav-container { height:76px; gap:10px; }
+ .brand-mark { height:54px; width:45px; }
+ .brand-logo-img { height:64px; width:58px; }
+ .brand-name { font-size:10px; } .brand-name small { font-size:7px; }
+ .brand-logo,.nav-actions { gap:8px; }
+ .nav-actions .btn { padding:10px; font-size:8px; letter-spacing:.03em; }
+ .menu-toggle { font-size:9px; min-width:44px; }
+ .mobile-nav { top:76px; }
+ .hero-section { width:calc(100% - 32px); }
+ .hero-content { grid-column:1/-1; padding:32px 20px 40px; }
+ .hero-eyebrow { margin-bottom:44px; font-size:9px; }
+ .hero-title { font-size:clamp(48px,12vw,72px); max-width:420px; }
+ .hero-description { max-width:360px; }
+ .hero-media-wrapper { grid-column:1/-1; grid-row:2; margin:0 20px 20px; border:0; }
+ .hero-poster-img { height:420px; min-height:0; flex:none; object-position:center; }
+ .hero-image-caption { flex-direction:row; font-size:8px; padding-inline:0; }
+ .hero-footer-bar { padding:16px 20px; font-size:8px; flex-wrap:wrap; }
+ .section,#featured-films,#travel-section { padding-block:64px; }
+ #photography-gallery { padding-bottom:80px; }
+ .section-meta { margin-bottom:24px; } .section-title { font-size:36px; }
+ .section-desc { margin-bottom:32px; font-size:14px; }
+ .studio-image-col,.studio-content-col { grid-column:1/-1; }
+ .studio-image-col { margin-right:20%; } .studio-content-col { padding-top:44px; }
+ .studio-body { font-size:14px; }
+ .featured-films-grid { gap:40px 12px; }
+ .film-card-large,.film-card-medium,.film-card-wide { grid-column:1/-1; margin-top:0; }
+ .film-card-medium { grid-column:3/13; }
+ .film-card-medium .film-card-thumb { aspect-ratio:4/3; }
+ .film-card-bottom h3 { font-size:27px; } .film-meta-details { font-size:8px; }
+ .masonry-gallery { gap:36px 12px; }
+ .gallery-item:nth-child(n),.masonry-gallery.is-filtered .gallery-item { grid-column:1/-1; margin-top:0; }
+ .gallery-item:nth-child(even) { grid-column:3/13; }
+ .gallery-item:nth-child(n) img { aspect-ratio:4/3; }
+ .filter-btn { padding:14px 12px; font-size:9px; }
+ .travel-grid { gap:28px 12px; } .travel-card,.travel-card:first-child { grid-column:1/-1; }
+ .travel-card:first-child img { aspect-ratio:4/3; }
+ .service-card { gap:0; } .service-img-wrap { grid-column:1/10; }
+ .service-img-wrap img { aspect-ratio:16/10; }
+ .service-body { grid-column:1/-1; padding-bottom:12px; }
+ .process-step { grid-template-columns:36px 1fr; gap:12px 20px; }
+ .process-step p { grid-column:2; }
+ .package-card { padding:24px 0; display:block; }
+ .package-card.featured { padding-left:16px; }
+ .package-title { margin-bottom:12px; }
+ .package-desc,.package-features { margin-bottom:20px; }
+ .services-grid>.package-card { display:block; }
+ .services-grid>.package-card .process-num { margin-bottom:14px; }
+ .booking-form-box { padding:20px; } .form-grid { grid-template-columns:1fr; }
+ .form-control { font-size:16px; }
+ .section-end { flex-direction:column; align-items:flex-start; }
+ .page-intro { padding-top:48px; } .page-intro h1 { font-size:46px; }
+ .footer-top { gap:32px 24px; }
+ .footer-top>:first-child { grid-column:1/-1; padding-right:0; }
+ .footer-top>:nth-child(2),.footer-top>:nth-child(3) { grid-column:span 6; }
+ .footer-top>:nth-child(4) { grid-column:1/-1; }
+ .footer-bottom { flex-direction:column; gap:12px; }
+ .photo-lightbox { padding:80px 16px 100px; }
+ .lightbox-image { max-height:65vh; }
+ .lightbox-prev,.lightbox-next { top:auto; bottom:24px; }
 }
-
-/* Extra Small Phones (420px and below) */
-@media (max-width: 420px) {
-  .hero-cta-group {
-    width: 100%;
-  }
-
-  .hero-cta-group .btn {
-    width: 100%;
-  }
-
-  .film-card-large, .film-card-medium, .film-card-wide {
-    height: 280px;
-  }
-
-  .booking-form-box {
-    padding: 1.5rem 1.25rem;
-  }
-}
+@media(max-width:370px) { .brand-name { display:none; } }
