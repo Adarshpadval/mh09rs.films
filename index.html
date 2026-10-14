@@ -69,7 +69,7 @@
   </header>
   <nav id="mobile-navigation" class="mobile-nav" aria-label="Mobile navigation" hidden>
     <ul class="mobile-nav-list"><li><a class="mobile-nav-link" href="index.html">Home</a></li><li><a href="index.html#featured-films" class="mobile-nav-link">Films</a></li><li><a href="pages/portfolio.html" class="mobile-nav-link">Photography</a></li><li><a href="pages/about.html" class="mobile-nav-link">Studio</a></li><li><a href="pages/services.html" class="mobile-nav-link">Services</a></li>
-      <li><a class="mobile-nav-link" href="pages/contact.html">Contact</a></li>
+      <li><a class="mobile-nav-link" href="pages/contact.html">Check your date ↗</a></li>
     </ul>
   </nav>
   <main id="main-content" class="home-main">
@@ -84,7 +84,7 @@
         </div>
       </div>
       <figure class="hero-media-wrapper">
-        <img src="assets/images/hero-poster.jpg" alt="Newlyweds celebrating with their guests" class="hero-poster-img" fetchpriority="high" loading="eager">
+        <div class="cinema-frame" data-camera-motion><img src="assets/images/hero-poster.jpg" alt="Newlyweds celebrating with their guests" class="hero-poster-img cinema-image" fetchpriority="high" loading="eager"><span class="viewfinder" aria-hidden="true"><i></i><i></i><i></i><i></i></span></div>
         <figcaption class="hero-image-caption"><span>MH09RS / Selected work</span><span>Films & stills</span></figcaption>
       </figure>
       <div class="hero-footer-bar"><span>A record of your day, as it unfolds.</span><span>Scroll to explore ↓</span></div>
@@ -94,7 +94,7 @@
         <div class="studio-grid">
           <div class="studio-image-col">
             <div class="studio-image-card">
-              <img src="assets/images/filmmaker-rohit.jpg" alt="Rohit Suryawanshi — Cinematographer & Founder of MH09RS Films" loading="lazy">
+              <div class="cinema-frame" data-camera-motion><img class="cinema-image" src="assets/images/filmmaker-rohit.jpg" alt="Rohit Suryawanshi — Cinematographer & Founder of MH09RS Films" loading="lazy"><span class="viewfinder" aria-hidden="true"><i></i><i></i><i></i><i></i></span></div>
               <div class="studio-badge">
                 <span class="studio-badge-label">Lead Cinematographer</span>
                 <span class="studio-badge-val">Rohit Suryawanshi</span>
@@ -269,7 +269,7 @@
 
         <div class="travel-grid">
           <div class="travel-card">
-            <img src="assets/images/travel-amba-ghat.jpg" alt="Amba Ghat Misty Curving Roads" loading="lazy">
+            <div class="cinema-frame" data-camera-motion><img class="cinema-image" src="assets/images/travel-amba-ghat.jpg" alt="Amba Ghat Misty Curving Roads" loading="lazy"><span class="viewfinder" aria-hidden="true"><i></i><i></i><i></i><i></i></span></div>
             <div class="travel-card-overlay">
               <span class="travel-location">WESTERN GHATS</span>
               <h3 class="travel-title">Amba Ghat</h3>
@@ -615,6 +615,7 @@
     <button type="button" class="lightbox-nav-btn lightbox-next" aria-label="Next photograph">→</button>
   </dialog>
   <script src="assets/js/main.js"></script>
+  <script src="assets/js/animations.js"></script>
 
   <script src="assets/js/portfolio.js"></script>
   <script src="assets/js/contact.js"></script>

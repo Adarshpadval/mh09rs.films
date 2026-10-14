@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
     else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
   });
-  window.matchMedia('(min-width: 801px)').addEventListener('change', event => {
+  window.matchMedia('(min-width: 961px)').addEventListener('change', event => {
     if (event.matches && !menu.hidden) setOpen(false);
   });
 });
