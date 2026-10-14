@@ -37,6 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const stage = opening.querySelector('.opening-stage');
     const lens = opening.querySelector('.opening-lens');
     const photo = opening.querySelector('.opening-photo');
+    const flash = opening.querySelector('.opening-flash');
     const blades = [...opening.querySelectorAll('.iris-blade')];
     const ring = opening.querySelector('.lens-focus-ring');
     const focus = opening.querySelector('.opening-focus');
@@ -68,8 +69,12 @@ document.addEventListener('DOMContentLoaded', () => {
       photo.style.filter = compact.matches ? 'none' : 'blur(' + ((1 - aperture) * 1.4).toFixed(2) + 'px)';
       lens.style.transform = 'translate(-50%,-50%) scale(' + (1 + expansion * .45).toFixed(4) + ')';
       lens.style.opacity = 1 - clamp((p - .52) / .24);
+      const capture = clamp((p - .465) / .06);
+      flash.style.opacity = (Math.sin(capture * Math.PI) * .2).toFixed(3);
+      const shake = compact.matches ? 0 : Math.sin((p - .47) * 300) * Math.exp(-Math.pow((p - .495) / .025, 2)) * 1.25;
+      stage.style.transform = 'translate3d(' + shake.toFixed(2) + 'px,' + (shake * -.45).toFixed(2) + 'px,0)';
       focus.style.top = center;
-      focus.style.opacity = Math.sin(clamp((p - .15) / .5) * Math.PI) * .7;
+      focus.style.opacity = Math.sin(clamp((p - .15) / .5) * Math.PI) * .48;
       focus.style.transform = 'scale(' + (1.25 - aperture * .25).toFixed(4) + ')';
       opening.dataset.phase = p < .3 ? 'opening' : p < .55 ? 'focusing' : 'photograph';
     }
@@ -167,7 +172,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function setup() {
     galleryContext?.revert();
     sceneContext?.revert();
-    document.querySelectorAll('.opening-photo, .opening-lens, .opening-focus, .reel-track, .reel-gear').forEach(el => el.removeAttribute('style'));
+    document.querySelectorAll('.opening-stage, .opening-photo, .opening-lens, .opening-focus, .opening-flash, .reel-track, .reel-gear').forEach(el => el.removeAttribute('style'));
     enabled = !reduced.matches && !manualOff && !shortScreen.matches;
     root.classList.toggle('cinematic-js', enabled);
     document.querySelectorAll('.camera-reel').forEach(reel => {

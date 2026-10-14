@@ -33,7 +33,7 @@ Gallery filters update immediately and announce the visible count. Photo dialogs
 
 Featured films currently link to the studio YouTube channel because the previous embed IDs were placeholders. Replace each film link with its actual watch URL when available.
 
-Home and About include a camera reel sequence: native vertical scrolling opens a circular lens gate and advances a horizontal filmstrip, with sprocket edges, a rotating transport wheel, and a frame counter. Scrolling back reverses the sequence. The section uses a short sticky stage, supports touch scrolling, and includes a skip link. Reduced-motion users get a normal horizontally scrollable gallery with keyboard access.
+Home opens on a full-bleed, softly layered wedding photograph and an individual-blade camera iris. Native vertical scrolling opens the aperture, briefly flashes and settles the shutter, then expands into the full photograph; scrolling back reverses every stage. The editorial headline and existing wedding image remain readable throughout. Home and About also advance a horizontal filmstrip with sprocket edges, a rotating transport wheel, and a frame counter. The short sticky stages support touch scrolling and include skip links. Reduced-motion users get a static photograph and a normal horizontally scrollable gallery with keyboard access.
 
 ## Content before publication
 

@@ -20,6 +20,13 @@ async function atProgress(id,p){
  await page.evaluate(y=>scrollTo({top:y,behavior:'instant'}),y);
  await page.waitForTimeout(650);
 }
+async function alignHero(){
+ await page.evaluate(()=>{
+  const hero=document.querySelector('.hero-section'),header=document.querySelector('.site-header');
+  scrollTo({top:hero.getBoundingClientRect().top+scrollY-header.offsetHeight,behavior:'instant'});
+ });
+ await page.waitForTimeout(200);
+}
 try{
 for(const width of [320,390,768,1024,1440]){
  await page.setViewportSize({width,height:900});
@@ -32,6 +39,10 @@ for(const width of [320,390,768,1024,1440]){
 }
 await page.setViewportSize({width:1440,height:1000});
 await page.goto('http://127.0.0.1:4173/index.html');await page.evaluate(()=>document.fonts.ready);
+await alignHero();
+if(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth))throw Error('Desktop hero overflow');
+await page.screenshot({path:path.join(shots,'mh09rs-home-hero.png')});
+await atProgress('camera-opening',0);
 const blade0=await page.locator('.iris-blade').first().getAttribute('d');
 await atProgress('camera-opening',0);
 await page.screenshot({path:path.join(shots,'mh09rs-lens-closed.png')});
@@ -40,11 +51,15 @@ await atProgress('camera-opening',.35);
 const blade1=await page.locator('.iris-blade').first().getAttribute('d');
 if(blade0===blade1)throw Error('Aperture blades did not move');
 await page.screenshot({path:path.join(shots,'mh09rs-lens-opening.png')});
+await atProgress('camera-opening',.495);
+const capture=await page.evaluate(()=>({flash:+getComputedStyle(document.querySelector('.opening-flash')).opacity,shake:new DOMMatrixReadOnly(getComputedStyle(document.querySelector('.opening-stage')).transform).m41}));
+if(capture.flash<.15||Math.abs(capture.shake)<.1)throw Error('Shutter flash or camera shake missing: '+JSON.stringify(capture));
 await atProgress('camera-opening',.95);
 if(await page.locator('.opening-lens').evaluate(el=>+getComputedStyle(el).opacity)>.05)throw Error('Lens did not transition out');
 await page.screenshot({path:path.join(shots,'mh09rs-lens-photo.png')});
 await atProgress('camera-opening',.1);
 if(await page.locator('.opening-lens').evaluate(el=>+getComputedStyle(el).opacity)<.95)throw Error('Lens reverse failed');
+if(await page.locator('.opening-flash').evaluate(el=>+getComputedStyle(el).opacity)>.01)throw Error('Shutter flash did not reverse');
 await atProgress('film-transport-0',.7);
 if(await page.locator('.reel-track').evaluate(el=>getComputedStyle(el).transform)==='none')throw Error('Reel did not move');
 await page.screenshot({path:path.join(shots,'mh09rs-film-transport.png')});
@@ -69,6 +84,23 @@ await page.locator('[data-filter="all"]').click();await page.waitForTimeout(200)
 if(await page.locator('.gallery-item:visible').count()!==12)throw Error('Lost portfolio items');
 await atProgress('gallery-develop-0',1);
 await page.screenshot({path:path.join(shots,'mh09rs-portfolio-scene.png')});
+await page.setViewportSize({width:390,height:844});
+await page.goto('http://127.0.0.1:4173/index.html');await page.evaluate(()=>document.fonts.ready);
+await atProgress('camera-opening',.3);
+await page.screenshot({path:path.join(shots,'mh09rs-lens-mobile.png')});
+await atProgress('camera-opening',.1);
+if(await page.locator('.opening-lens').evaluate(el=>+getComputedStyle(el).opacity)<.95)throw Error('Mobile lens reverse failed');
+await alignHero();
+if(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth))throw Error('Mobile hero overflow');
+await page.screenshot({path:path.join(shots,'mh09rs-home-hero-mobile.png')});
+await atProgress('camera-opening',.1);
+await page.setViewportSize({width:768,height:1024});
+await page.goto('http://127.0.0.1:4173/index.html');await page.evaluate(()=>document.fonts.ready);
+await atProgress('camera-opening',.495);
+if(await page.locator('.opening-flash').evaluate(el=>+getComputedStyle(el).opacity)<.15)throw Error('Tablet shutter flash missing');
+await atProgress('camera-opening',.1);
+if(await page.locator('.opening-lens').evaluate(el=>+getComputedStyle(el).opacity)<.95)throw Error('Tablet lens reverse failed');
+if(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth))throw Error('Tablet horizontal overflow');
 await page.setViewportSize({width:390,height:844});
 await page.goto('http://127.0.0.1:4173/index.html');await page.evaluate(()=>document.fonts.ready);
 await atProgress('camera-opening',.3);
@@ -99,7 +131,7 @@ for(const file of ['index.html','pages/about.html','pages/portfolio.html','pages
  }
 }
 if(brokenLinks.length)throw Error(JSON.stringify(brokenLinks));
-console.log(JSON.stringify({results,errors,initialCLS,brokenLinks,interactions:'aperture, reversal, transport, reduced motion, pause, filters, dialog, menu, no-JS, blocked vendor, landscape: PASS',screenshots:shots},null,2));
+console.log(JSON.stringify({results,errors,initialCLS,brokenLinks,interactions:'aperture, shutter flash and shake, desktop/tablet/mobile reversal, transport, reduced motion, pause, filters, dialog, menu, no-JS, blocked vendor, landscape: PASS',screenshots:shots},null,2));
 if(errors.length)throw Error(errors.join('\n'));
 }finally{await browser.close();server.close();}
 })().catch(e=>{console.error(e);server.close();process.exitCode=1;});
