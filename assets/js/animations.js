@@ -14,8 +14,8 @@ function initScrollObserver() {
   if (!revealElements.length) return;
 
   const observerOptions = {
-    threshold: 0.12,
-    rootMargin: '0px 0px -40px 0px'
+    threshold: 0.05,
+    rootMargin: '0px 0px -20px 0px'
   };
 
   const observer = new IntersectionObserver((entries, obs) => {
@@ -27,5 +27,12 @@ function initScrollObserver() {
     });
   }, observerOptions);
 
-  revealElements.forEach(el => observer.observe(el));
+  revealElements.forEach(el => {
+    const rect = el.getBoundingClientRect();
+    if (rect.top < window.innerHeight && rect.bottom > 0) {
+      el.classList.add('revealed');
+    } else {
+      observer.observe(el);
+    }
+  });
 }

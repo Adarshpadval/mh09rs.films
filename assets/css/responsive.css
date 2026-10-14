@@ -44,7 +44,17 @@
 /* Tablet Screens (992px and below) */
 @media (max-width: 992px) {
   :root {
-    --header-height: 68px;
+    --header-height: 80px;
+  }
+
+  .brand-logo img,
+  .brand-logo-img {
+    height: 56px;
+  }
+
+  .site-header.scrolled .brand-logo img,
+  .site-header.scrolled .brand-logo-img {
+    height: 46px;
   }
 
   .nav-menu, .nav-actions .btn-sm {
@@ -121,6 +131,19 @@
 
 /* Mobile Screens (768px and below) */
 @media (max-width: 768px) {
+  :root {
+    --header-height: 74px;
+  }
+
+  .brand-logo img,
+  .brand-logo-img {
+    height: 52px;
+  }
+
+  .footer-brand-logo {
+    height: 64px;
+  }
+
   .hero-content {
     max-width: 100%;
     padding: 2rem 1.5rem;
