@@ -18,6 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
     items.forEach(item => { item.hidden = category !== 'all' && item.dataset.category !== category; });
     gallery?.classList.toggle('is-filtered', category !== 'all');
     updateStatus();
+    document.dispatchEvent(new Event('portfolio:filtered'));
   }));
   updateStatus();
   if (!dialog) return;
@@ -41,6 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
     trigger = item;
     show(item);
     dialog.showModal();
+    dialog.dispatchEvent(new Event('photo:opened'));
     document.body.style.overflow = 'hidden';
   }));
   dialog.querySelector('.lightbox-close').addEventListener('click', () => dialog.close());

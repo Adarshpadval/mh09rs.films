@@ -14,6 +14,8 @@
   <link rel="stylesheet" href="../assets/css/style.css">
   <link rel="stylesheet" href="../assets/css/animations.css">
   <link rel="stylesheet" href="../assets/css/responsive.css">
+  <script>try{if(!matchMedia('(prefers-reduced-motion: reduce)').matches&&sessionStorage.getItem('mh09rs-motion')!=='off')document.documentElement.classList.add('cinematic-js')}catch(e){}</script>
+  <link rel="stylesheet" href="../assets/css/cinematic.css">
 </head>
 <body id="top">
   <a class="skip-link" href="#main-content">Skip to content</a>
@@ -81,7 +83,7 @@
         <div class="reel-window" tabindex="0" role="region" aria-label="Filmstrip of selected work">
           <div class="reel-track"><figure class="reel-frame"><img src="../assets/images/service-weddings.jpg" alt="Wedding photography selection" loading="lazy"><figcaption><span>01 / Observe</span><span>01 / MH09RS</span></figcaption></figure><figure class="reel-frame"><img src="../assets/images/service-prewed.jpg" alt="Pre-wedding photography selection" loading="lazy"><figcaption><span>02 / Frame</span><span>02 / MH09RS</span></figcaption></figure><figure class="reel-frame"><img src="../assets/images/film-story-03.jpg" alt="Celebration film selection" loading="lazy"><figcaption><span>03 / Assemble</span><span>03 / MH09RS</span></figcaption></figure></div>
         </div>
-        <div class="reel-footer"><div class="reel-mechanism"><span class="reel-gear" aria-hidden="true"></span><span aria-hidden="true">Frame <span class="reel-counter">01</span> / 03</span></div><span class="reel-instruction">Scroll to open the lens<br>and advance the film</span></div>
+        <div class="reel-footer"><div class="reel-mechanism"><span class="reel-gear" aria-hidden="true"></span><span aria-hidden="true">Frame <span class="reel-counter">01</span> / 03</span></div><span class="reel-instruction">Scroll sideways to explore the frames</span></div>
       </div>
     </section>
     <section class="section section-darker" id="studio-values">
@@ -151,6 +153,8 @@
 
 
   <script src="../assets/js/main.js"></script>
+  <script src="../assets/js/vendor/gsap.min.js"></script>
+  <script src="../assets/js/vendor/ScrollTrigger.min.js"></script>
   <script src="../assets/js/animations.js"></script>
 
 </body>
