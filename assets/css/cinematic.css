@@ -237,3 +237,34 @@
 button.film-card { width:100%; border:0; padding:0; text-align:left; background:transparent; color:inherit; font:inherit; }
 .film-card-overlay,.film-card-bottom { display:block; }
 .film-title { display:block; font:500 clamp(27px,2.3vw,36px)/1.08 var(--font-serif); margin-bottom:10px; letter-spacing:-.025em; }
+/* Short, native-scroll hero composition. The document remains usable without JS. */
+.hero-pin { position:relative; }
+.hero-surround { display:none; }
+@media(prefers-reduced-motion:no-preference) {
+ .scroll-cinema .cinematic-hero { background:var(--bg-primary); height:calc(min(88svh,900px) + 36svh); min-height:calc(560px + 36svh); }
+ .scroll-cinema .hero-pin { position:sticky; top:0; height:min(88svh,900px); min-height:560px; overflow:hidden; }
+ .scroll-cinema .opening-stage { transform-origin:50% 50%; transform:translate3d(0,var(--hero-y,0px),0) scale(var(--hero-scale,1)); border-radius:var(--hero-radius,0px); }
+ .scroll-cinema .hero-surround { display:block; position:absolute; inset:0; pointer-events:none; opacity:var(--surround-opacity,0); transform:scale(var(--surround-scale,.92)); }
+ .hero-surround img { position:absolute; width:12%; height:24%; object-fit:cover; }
+ .hero-surround img:nth-child(1) { left:-1%; top:18%; transform:rotate(-7deg); }
+ .hero-surround img:nth-child(2) { right:-1%; top:16%; transform:rotate(6deg); }
+ .hero-surround img:nth-child(3) { left:0; bottom:12%; transform:rotate(5deg); }
+ .hero-surround img:nth-child(4) { right:0; bottom:10%; transform:rotate(-5deg); }
+ .closing-image { transform:translate3d(0,var(--photo-offset,0px),0); }
+ .studio-image-card .cinema-image { transform:translate3d(0,var(--photo-offset,0px),0) scale(1.06); }
+}
+@media(max-width:800px) and (prefers-reduced-motion:no-preference) {
+ .scroll-cinema .cinematic-hero { height:calc(clamp(500px,82svh,680px) + 18svh); min-height:0; }
+ .scroll-cinema .hero-pin,.scroll-cinema .opening-stage { height:clamp(500px,82svh,680px); min-height:0; }
+ .scroll-cinema .hero-surround { display:none; }
+}
+@media(prefers-reduced-motion:reduce) {
+ .opening-stage,.closing-image,.studio-image-card .cinema-image { transform:none!important; }
+ .hero-surround { display:none!important; }
+}
+@media(max-width:800px) {
+ .studio-image-card .cinema-image,.closing-image { transform:none; }
+}
+.home-page .site-header { transition:background .25s; }
+.home-page .site-header.is-scrolled .nav-link,.home-page .site-header.is-scrolled .brand-logo,.home-page .site-header.is-scrolled .menu-toggle { color:#171715; }
+.hero-links .text-link { min-height:48px; }

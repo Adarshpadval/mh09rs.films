@@ -4,7 +4,7 @@ Static wedding film and photography portfolio for Rohit Suryawanshi, Kolhapur. N
 
 ## Design
 
-A simple photographic hero appears immediately, without a lens intro, animation controls, parallax, or scroll interception. Warm ivory, charcoal, bronze details, editorial serif headings, and quiet layouts keep attention on the work. The horizontal About filmstrip has been removed.
+A photographic hero appears immediately with no lens intro. A short native-scroll transition shrinks it into an inset frame; four surrounding photographs appear on desktop. Mobile uses a smaller shrink without the surrounding photographs. Gallery entries reveal progressively, and studio/closing photographs have subtle desktop parallax. Reduced-motion users receive a static layout. Warm ivory, charcoal, bronze details, editorial serif headings, and quiet layouts keep attention on the work. The horizontal About filmstrip has been removed.
 
 Mobile layouts use a shorter hero, two-column photography galleries, landscape film thumbnails, compact service images, and a smaller founder portrait. Booking remains visible beside the mobile menu. Text and images are rearranged for small screens rather than scaling down the desktop layout.
 
@@ -20,7 +20,7 @@ Mobile layouts use a shorter hero, two-column photography galleries, landscape f
 - `assets/js/portfolio.js`: filters and accessible native photo dialog.
 - `assets/js/contact.js`: form validation and WhatsApp handoff.
 
-Animation libraries are no longer loaded. The retired animation script is not referenced by any page. Fonts use Google Fonts with local fallbacks.
+No animation libraries are loaded. `assets/js/animations.js` uses passive scroll listeners, requestAnimationFrame, IntersectionObserver and the browser animation API. It performs no continuous background animation and does not intercept wheel or touch scrolling. Fonts use Google Fonts with local fallbacks.
 
 ## URLs and deployment
 
