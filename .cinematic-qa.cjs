@@ -1,137 +1,18 @@
-const {chromium}=require('C:/Users/adars/AppData/Local/npm-cache/_npx/e41f203b7505f1fb/node_modules/playwright');
-const fs=require('fs'),path=require('path'),http=require('http'),os=require('os');
-const root=process.cwd();
-const server=http.createServer((req,res)=>{
-const file=path.resolve(root,'.'+decodeURIComponent(req.url.split('?')[0]));
-if(!file.startsWith(root+path.sep)){res.writeHead(403).end();return;}
-fs.readFile(file,(e,b)=>{res.writeHead(e?404:200,{'Content-Type':({'.html':'text/html','.css':'text/css','.js':'text/javascript','.jpg':'image/jpeg','.png':'image/png','.svg':'image/svg+xml'})[path.extname(file)]||'text/plain'});res.end(e?'':b);});
-});
-(async()=>{
-await new Promise(r=>server.listen(4173,'127.0.0.1',r));
-const browser=await chromium.launch({channel:'msedge',headless:true});
-const page=await browser.newPage();const errors=[];page.on('pageerror',e=>errors.push(e.message));
-await page.addInitScript(()=>{
- window.layoutShifts=[];
- new PerformanceObserver(list=>{for(const entry of list.getEntries())if(!entry.hadRecentInput)window.layoutShifts.push(entry.value);}).observe({type:'layout-shift',buffered:true});
-});
-const shots=os.tmpdir(); const results=[];
-async function atProgress(id,p){
- const y=await page.evaluate(({id,p})=>{const t=ScrollTrigger.getById(id);if(!t)throw Error('Missing trigger '+id);return t.start+(t.end-t.start)*p;},{id,p});
- await page.evaluate(y=>scrollTo({top:y,behavior:'instant'}),y);
- await page.waitForTimeout(650);
-}
-async function alignHero(){
- await page.evaluate(()=>{
-  const hero=document.querySelector('.hero-section'),header=document.querySelector('.site-header');
-  scrollTo({top:hero.getBoundingClientRect().top+scrollY-header.offsetHeight,behavior:'instant'});
- });
- await page.waitForTimeout(200);
-}
+﻿const {chromium}=require('C:/Users/adars/AppData/Local/npm-cache/_npx/e41f203b7505f1fb/node_modules/playwright');
+const fs=require('fs'),path=require('path'),http=require('http'),os=require('os'),assert=require('assert');
+const root=process.cwd(),errors=[];
+const server=http.createServer((req,res)=>{let url=decodeURIComponent(req.url.split('?')[0]).replace(/^\/mh09rs.films/,'');const file=path.resolve(root,'.'+(url==='/'?'/index.html':url));if(!file.startsWith(root+path.sep)){res.writeHead(403).end();return;}fs.readFile(file,(e,b)=>{res.writeHead(e?404:200,{'Content-Type':({'.html':'text/html','.css':'text/css','.js':'text/javascript','.webp':'image/webp','.jpg':'image/jpeg','.png':'image/png','.svg':'image/svg+xml'})[path.extname(file)]||'text/plain'});res.end(e?'':b);});});
+(async()=>{await new Promise(r=>server.listen(4173,'127.0.0.1',r));const browser=await chromium.launch({channel:'msedge',headless:true});const page=await browser.newPage();page.on('pageerror',e=>errors.push(e.message));const base='http://127.0.0.1:4173/mh09rs.films/';let checks=0;
 try{
-for(const width of [320,390,768,1024,1440]){
- await page.setViewportSize({width,height:900});
- for(const file of ['index.html','pages/about.html','pages/portfolio.html','pages/services.html','pages/contact.html']){
-  await page.goto('http://127.0.0.1:4173/'+file);await page.evaluate(()=>document.fonts.ready);await page.waitForTimeout(150);
-  const state=await page.evaluate(()=>({overflow:document.documentElement.scrollWidth>innerWidth,h1:document.querySelectorAll('h1').length,items:document.querySelectorAll('.gallery-item').length,broken:[...document.images].filter(i=>i.getAttribute('src')&&i.complete&&!i.naturalWidth).map(i=>i.src)}));
-  if(state.overflow||state.h1!==1||state.broken.length)throw Error(JSON.stringify({width,file,state}));
-  results.push({width,file,...state});
- }
-}
-await page.setViewportSize({width:1440,height:1000});
-await page.goto('http://127.0.0.1:4173/index.html');await page.evaluate(()=>document.fonts.ready);
-await alignHero();
-if(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth))throw Error('Desktop hero overflow');
-await page.screenshot({path:path.join(shots,'mh09rs-home-hero.png')});
-await atProgress('camera-opening',0);
-const blade0=await page.locator('.iris-blade').first().getAttribute('d');
-await atProgress('camera-opening',0);
-await page.screenshot({path:path.join(shots,'mh09rs-lens-closed.png')});
-const initialCLS=await page.evaluate(()=>window.layoutShifts.reduce((a,b)=>a+b,0));
-await atProgress('camera-opening',.35);
-const blade1=await page.locator('.iris-blade').first().getAttribute('d');
-if(blade0===blade1)throw Error('Aperture blades did not move');
-await page.screenshot({path:path.join(shots,'mh09rs-lens-opening.png')});
-await atProgress('camera-opening',.495);
-const capture=await page.evaluate(()=>({flash:+getComputedStyle(document.querySelector('.opening-flash')).opacity,shake:new DOMMatrixReadOnly(getComputedStyle(document.querySelector('.opening-stage')).transform).m41}));
-if(capture.flash<.15||Math.abs(capture.shake)<.1)throw Error('Shutter flash or camera shake missing: '+JSON.stringify(capture));
-await atProgress('camera-opening',.95);
-if(await page.locator('.opening-lens').evaluate(el=>+getComputedStyle(el).opacity)>.05)throw Error('Lens did not transition out');
-await page.screenshot({path:path.join(shots,'mh09rs-lens-photo.png')});
-await atProgress('camera-opening',.1);
-if(await page.locator('.opening-lens').evaluate(el=>+getComputedStyle(el).opacity)<.95)throw Error('Lens reverse failed');
-if(await page.locator('.opening-flash').evaluate(el=>+getComputedStyle(el).opacity)>.01)throw Error('Shutter flash did not reverse');
-await atProgress('film-transport-0',.7);
-if(await page.locator('.reel-track').evaluate(el=>getComputedStyle(el).transform)==='none')throw Error('Reel did not move');
-await page.screenshot({path:path.join(shots,'mh09rs-film-transport.png')});
-await page.emulateMedia({reducedMotion:'reduce'});await page.waitForTimeout(200);
-if(await page.evaluate(()=>ScrollTrigger.getAll().length)!==0)throw Error('Reduced motion did not clean triggers');
-if(await page.locator('.opening-photo').evaluate(el=>getComputedStyle(el).clipPath)!=='none')throw Error('Reduced motion photo clipped');
-if(await page.locator('.reel-window').first().getAttribute('tabindex')!=='0')throw Error('Static reel not keyboard accessible');
-await page.emulateMedia({reducedMotion:'no-preference'});await page.waitForTimeout(200);
-await atProgress('camera-opening',.3);
-await page.locator('.motion-toggle').click();
-if(await page.evaluate(()=>document.documentElement.classList.contains('cinematic-js')))throw Error('Motion pause failed');
-await page.locator('.motion-toggle').click();
-if(!await page.evaluate(()=>document.documentElement.classList.contains('cinematic-js')))throw Error('Motion resume failed');
-await page.goto('http://127.0.0.1:4173/pages/portfolio.html');await page.evaluate(()=>document.fonts.ready);
-await page.locator('[data-filter="weddings"]').click();await page.waitForTimeout(200);
-if(await page.locator('.gallery-item:visible').count()!==3)throw Error('Filter failed');
-if(await page.evaluate(()=>ScrollTrigger.getAll().filter(t=>t.vars.id?.startsWith('gallery-develop')).length)!==3)throw Error('Filter trigger rebuild failed');
-await page.locator('.gallery-item:visible').first().click();
-if(!await page.locator('dialog').evaluate(el=>el.open))throw Error('Lightbox failed');
-await page.keyboard.press('ArrowRight');await page.keyboard.press('Escape');
-await page.locator('[data-filter="all"]').click();await page.waitForTimeout(200);
-if(await page.locator('.gallery-item:visible').count()!==12)throw Error('Lost portfolio items');
-await atProgress('gallery-develop-0',1);
-await page.screenshot({path:path.join(shots,'mh09rs-portfolio-scene.png')});
-await page.setViewportSize({width:390,height:844});
-await page.goto('http://127.0.0.1:4173/index.html');await page.evaluate(()=>document.fonts.ready);
-await atProgress('camera-opening',.3);
-await page.screenshot({path:path.join(shots,'mh09rs-lens-mobile.png')});
-await atProgress('camera-opening',.1);
-if(await page.locator('.opening-lens').evaluate(el=>+getComputedStyle(el).opacity)<.95)throw Error('Mobile lens reverse failed');
-await alignHero();
-if(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth))throw Error('Mobile hero overflow');
-await page.screenshot({path:path.join(shots,'mh09rs-home-hero-mobile.png')});
-await atProgress('camera-opening',.1);
-await page.setViewportSize({width:768,height:1024});
-await page.goto('http://127.0.0.1:4173/index.html');await page.evaluate(()=>document.fonts.ready);
-await atProgress('camera-opening',.495);
-if(await page.locator('.opening-flash').evaluate(el=>+getComputedStyle(el).opacity)<.15)throw Error('Tablet shutter flash missing');
-await atProgress('camera-opening',.1);
-if(await page.locator('.opening-lens').evaluate(el=>+getComputedStyle(el).opacity)<.95)throw Error('Tablet lens reverse failed');
-if(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth))throw Error('Tablet horizontal overflow');
-await page.setViewportSize({width:390,height:844});
-await page.goto('http://127.0.0.1:4173/index.html');await page.evaluate(()=>document.fonts.ready);
-await atProgress('camera-opening',.3);
-await page.screenshot({path:path.join(shots,'mh09rs-lens-mobile.png')});
-await page.locator('.menu-toggle').click();if(await page.locator('.mobile-nav').isHidden())throw Error('Menu failed');
-await page.keyboard.press('Escape');
-const nojs=await browser.newContext({javaScriptEnabled:false});
-const staticPage=await nojs.newPage();await staticPage.goto('http://127.0.0.1:4173/index.html');
-if(await staticPage.locator('.opening-photo').evaluate(el=>getComputedStyle(el).clipPath)!=='none')throw Error('No-JS fallback clipped');
-const blocked=await browser.newContext();const fallback=await blocked.newPage();
-await fallback.route('**/vendor/**',route=>route.abort());
-await fallback.goto('http://127.0.0.1:4173/index.html');
-if(await fallback.evaluate(()=>document.documentElement.classList.contains('cinematic-js')))throw Error('Library failure fallback failed');
-await page.setViewportSize({width:844,height:390});
-if(await page.evaluate(()=>document.documentElement.classList.contains('cinematic-js')))throw Error('Landscape fallback failed');
-const brokenLinks=[];
-for(const file of ['index.html','pages/about.html','pages/portfolio.html','pages/services.html','pages/contact.html']){
- const html=fs.readFileSync(file,'utf8');
- for(const m of html.matchAll(/(?:src|href)="([^"]+)"/g)){
-  if(/^(https?:|mailto:|tel:|data:)/.test(m[1]))continue;
-  const [relative,hash]=m[1].split('#');
-  const target=relative?path.resolve(path.dirname(file),decodeURIComponent(relative)):path.resolve(file);
-  if(!fs.existsSync(target))brokenLinks.push(file+': '+m[1]);
-  else if(hash && path.extname(target)==='.html'&&!fs.readFileSync(target,'utf8').includes('id="'+hash+'"'))brokenLinks.push(file+': '+m[1]);
- }
- for(const m of html.matchAll(/srcset="([^"]+)"/g))for(const candidate of m[1].split(',')){
-  if(!fs.existsSync(path.resolve(path.dirname(file),candidate.trim().split(' ')[0])))brokenLinks.push(candidate);
- }
-}
-if(brokenLinks.length)throw Error(JSON.stringify(brokenLinks));
-console.log(JSON.stringify({results,errors,initialCLS,brokenLinks,interactions:'aperture, shutter flash and shake, desktop/tablet/mobile reversal, transport, reduced motion, pause, filters, dialog, menu, no-JS, blocked vendor, landscape: PASS',screenshots:shots},null,2));
-if(errors.length)throw Error(errors.join('\n'));
-}finally{await browser.close();server.close();}
-})().catch(e=>{console.error(e);server.close();process.exitCode=1;});
+for(const width of [320,390,768,1024,1440]){await page.setViewportSize({width,height:900});for(const file of ['index.html','pages/portfolio.html','pages/about.html','pages/services.html','pages/contact.html']){await page.goto(base+file);await page.evaluate(()=>document.fonts.ready);const state=await page.evaluate(()=>({overflow:document.documentElement.scrollWidth>innerWidth,h1:document.querySelectorAll('h1').length,broken:[...document.images].filter(i=>i.getAttribute('src')&&i.complete&&!i.naturalWidth).map(i=>i.src)}));assert(!state.overflow,`${width} ${file} overflow`);assert.equal(state.h1,1);assert.deepEqual(state.broken,[]);checks++;}}
+await page.setViewportSize({width:1440,height:1000});await page.goto(base);await page.waitForTimeout(250);await page.locator('.motion-toggle').click();assert.notEqual(await page.locator('.opening-photo').evaluate(e=>getComputedStyle(e).clipPath),'none');const blade=await page.locator('.iris-blade').first().getAttribute('d');await page.waitForTimeout(300);assert.equal(await page.locator('.iris-blade').first().getAttribute('d'),blade);await page.screenshot({path:path.join(os.tmpdir(),'mh09rs-refined-lens.png')});await page.locator('.motion-toggle').click();await page.waitForTimeout(250);assert.notEqual(await page.locator('.iris-blade').first().getAttribute('d'),blade);await page.locator('.skip-intro').click();assert(await page.locator('.opening-lens').isHidden());await page.screenshot({path:path.join(os.tmpdir(),'mh09rs-refined-desktop.png')});assert(await page.locator('.film-card-large img').evaluate(e=>Math.abs(e.clientWidth/e.clientHeight-1.6)<.02),'Film crop must stay cinematic');await page.evaluate(async()=>{for(let y=0;y<document.body.scrollHeight;y+=700){scrollTo(0,y);await new Promise(r=>setTimeout(r,70));}await Promise.all([...document.images].filter(i=>i.src).map(i=>i.decode().catch(()=>{})));scrollTo({top:0,behavior:'instant'});});await page.waitForTimeout(200);await page.screenshot({path:path.join(os.tmpdir(),'mh09rs-refined-full.png'),fullPage:true});
+for(const category of ['weddings','prewedding','celebrations','portraits','travel']){await page.locator(`[data-filter="${category}"]`).click();assert(await page.locator('.gallery-item:visible').count()>0);assert.equal(await page.locator(`.gallery-item:visible:not([data-category="${category}"])`).count(),0);}
+await page.locator('.gallery-item:visible').first().click();assert(await page.locator('dialog').evaluate(d=>d.open));await page.keyboard.press('Escape');assert(!(await page.locator('dialog').evaluate(d=>d.open)));
+await page.evaluate(()=>{window.open=(url)=>{window.enquiryUrl=url;return null;};});await page.locator('#clientName').fill('Test Couple');await page.locator('#clientPhone').fill('919876543210');await page.locator('#eventDate').fill('2027-12-01');await page.locator('#eventType').selectOption({index:1});await page.locator('#venueCity').fill('Kolhapur');await page.locator('button[type=submit]').click();assert((await page.evaluate(()=>window.enquiryUrl)).includes('wa.me/919595222860?text='));assert((await page.locator('#formFeedback').innerText()).includes('ready'));
+await page.setViewportSize({width:390,height:844});await page.goto(base);await page.waitForTimeout(2400);await page.screenshot({path:path.join(os.tmpdir(),'mh09rs-refined-mobile.png')});await page.locator('.menu-toggle').click();assert(await page.locator('main').evaluate(m=>m.inert));await page.keyboard.press('Escape');assert(!(await page.locator('main').evaluate(m=>m.inert)));
+await page.emulateMedia({reducedMotion:'reduce'});await page.goto(base);assert(await page.locator('.opening-lens').isHidden());assert.equal(await page.locator('.opening-photo').evaluate(e=>getComputedStyle(e).clipPath),'none');
+const nojs=await browser.newContext({javaScriptEnabled:false});const staticPage=await nojs.newPage();await staticPage.goto(base);assert(await staticPage.locator('h1').isVisible());assert(await staticPage.locator('.opening-lens').isHidden());await nojs.close();
+// Every local href, source and fragment resolves under the GitHub Pages subpath.
+for(const file of ['index.html','pages/portfolio.html','pages/about.html','pages/services.html','pages/contact.html']){await page.goto(base+file);const links=await page.evaluate(()=>[...document.querySelectorAll('[href],[src]')].map(e=>e.getAttribute('href')||e.getAttribute('src')).filter(x=>x&&!/^(https?:|mailto:|tel:|data:)/.test(x)));for(const link of links){const url=new URL(link,base+file);const response=await page.request.get(url.href);assert(response.ok(),`${file}: ${link}`);if(url.hash){const html=await response.text();assert(html.includes(`id="${url.hash.slice(1)}"`),`${file}: missing ${link}`);}}}
+assert.deepEqual(errors,[]);console.log(JSON.stringify({responsivePages:checks,interactions:'aperture pause/resume/skip, filters, lightbox, menu, enquiry, reduced motion, no JavaScript',localLinks:'passed',consoleErrors:errors,screenshots:os.tmpdir()},null,2));
+}finally{await browser.close();server.close();}})().catch(e=>{console.error(e);process.exitCode=1;server.close();});

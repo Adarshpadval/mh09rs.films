@@ -1,11 +1,11 @@
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
 /* MH09RS / production notes: paper, ink, one accent, twelve columns. */
 :root {
- --bg-primary:#fbfaf7; --bg-secondary:#f0eee8; --bg-card:#fbfaf7;
- --text-primary:#111; --text-secondary:#53534f; --text-muted:#666660;
- --accent-amber:#b83224; --accent-gold:#b83224; --border-subtle:rgba(17,17,17,.16);
+ --bg-primary:#F7F5F0; --bg-secondary:#f0eee8; --bg-card:#F7F5F0;
+ --text-primary:#171715; --text-secondary:#53534f; --text-muted:#666660;
+ --accent-amber:#806744; --accent-gold:#A88B60; --border-subtle:rgba(17,17,17,.16);
  --font-sans:'Plus Jakarta Sans',Arial,sans-serif; --font-mono:'JetBrains Mono',Consolas,monospace;
- --font-serif:'Cormorant Garamond',Georgia,serif; --font-luxury:var(--font-mono);
+ --font-serif:'Cormorant Garamond',Georgia,serif; --font-luxury:var(--font-serif);
  --ease:cubic-bezier(.4,0,.2,1); --gutter:clamp(20px,4vw,72px);
 }
 *,*::before,*::after { box-sizing:border-box; }
@@ -210,13 +210,13 @@ input[type=checkbox] { accent-color:var(--accent-amber); width:17px; height:17px
 .footer-bottom { display:flex; justify-content:space-between; gap:24px; border-top:1px solid var(--border-subtle); padding-top:24px; font:10px/1.8 var(--font-mono); color:var(--text-muted); }
 .footer-top p { overflow-wrap:anywhere; }
 /* Native dialog supplies focus containment and Escape handling. */
-.photo-lightbox { position:fixed; inset:0; width:100%; height:100%; max-width:none; max-height:none; border:0; padding:70px 72px; background:#111; color:#fbfaf7; }
+.photo-lightbox { position:fixed; inset:0; width:100%; height:100%; max-width:none; max-height:none; border:0; padding:70px 72px; background:#111; color:#F7F5F0; }
 .photo-lightbox[open] { display:flex; align-items:center; justify-content:center; }
 .photo-lightbox::backdrop { background:#111; }
 .lightbox-content { max-width:100%; text-align:center; }
 .lightbox-image { width:auto; max-width:100%; max-height:75vh; margin:auto; object-fit:contain; }
-.lightbox-caption { margin-top:16px; font:11px/1.7 var(--font-mono); color:#fbfaf7; }
-.lightbox-close,.lightbox-nav-btn { position:absolute; color:#fbfaf7; background:#111; border:1px solid #666; min-width:48px; min-height:48px; font:20px var(--font-mono); }
+.lightbox-caption { margin-top:16px; font:11px/1.7 var(--font-mono); color:#F7F5F0; }
+.lightbox-close,.lightbox-nav-btn { position:absolute; color:#F7F5F0; background:#111; border:1px solid #666; min-width:48px; min-height:48px; font:20px var(--font-mono); }
 .lightbox-close { top:16px; right:24px; }
 .lightbox-prev { left:16px; top:48%; }
 .lightbox-next { right:16px; top:48%; }

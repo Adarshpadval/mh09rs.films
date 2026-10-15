@@ -11,7 +11,7 @@ All images are stored in `assets/images/` with clean filenames. To update an ima
 
 | Filename | Purpose | Recommended Resolution | Aspect Ratio |
 | :--- | :--- | :--- | :--- |
-| `hero-poster.jpg` | Homepage split hero photograph | 1600 × 2000 px | Portrait crop; keep faces near the centre |
+| `hero-poster.jpg` | Homepage full-viewport hero photograph | 1600 × 2000 px | Responsive full-bleed crop; keep faces near the centre |
 | `filmmaker-rohit.jpg` | Rohit Suryawanshi filmmaker portrait | 1000 × 1400 px | 3:4 or 4:5 |
 | `film-story-01.jpg` | Featured Film 01 (The Wedding Film) | 1600 × 900 px | 16:9 |
 | `film-story-02.jpg` | Featured Film 02 (Before Forever) | 1200 × 900 px | 4:3 or 16:9 |
