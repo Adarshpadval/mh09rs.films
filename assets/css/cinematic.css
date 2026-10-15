@@ -17,14 +17,10 @@
 .home-page .site-header.is-scrolled,.home-page .site-header:has(.menu-toggle[aria-expanded=true]) { background:#F7F5F0; color:#171715; }
 .home-page .site-header.is-scrolled .btn,.home-page .site-header:has(.menu-toggle[aria-expanded=true]) .btn { color:#171715; border-color:#171715; }
 .mobile-nav { top:80px; }
-.camera-opening { background:#111210; color:#F7F5F0; position:relative; }
+.cinematic-hero { background:#111210; color:#F7F5F0; position:relative; }
 .opening-stage { position:relative; height:100svh; min-height:720px; overflow:hidden; isolation:isolate; }
 .opening-photo { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:50% 42%; }
 .opening-shade { position:absolute; inset:0; background:linear-gradient(180deg,#0006,transparent 35%,#000b); pointer-events:none; }
-.opening-lens { display:none; position:absolute; left:50%; top:34%; width:min(26vmin,260px); height:auto; transform:translate(-50%,-50%); pointer-events:none; }
-.cinematic-js .opening-lens { display:block; }
-.lens-engraving { fill:#c3bfb5; font:10px Arial,sans-serif; letter-spacing:2.5px; }
-.iris-blade { stroke:#77766f; stroke-width:.6; }
 .opening-copy { position:absolute; left:var(--gutter); bottom:110px; right:var(--gutter); max-width:760px; }
 .opening-title { font:500 clamp(44px,5.3vw,80px)/1.02 var(--font-serif); letter-spacing:-.025em; margin-bottom:22px; }
 .opening-title em { font-weight:400; }
@@ -32,8 +28,6 @@
 .opening-copy .text-link { color:#fff; }
 .opening-footer { position:absolute; inset:auto var(--gutter) 24px; display:flex; justify-content:space-between; align-items:center; gap:16px; }
 .opening-footer a { font-size:11px; color:#eee9df; padding-block:12px; }
-.opening-actions { display:flex; gap:20px; }
-.motion-toggle,.skip-intro { background:transparent; border:0; border-bottom:1px solid #ffffff60; color:#fff; min-height:44px; font-size:11px; padding:8px 4px; }
 .introduction-grid { display:grid; grid-template-columns:1fr 1fr; align-items:center; gap:10%; }
 .introduction-grid h2 { margin:26px 0; }
 .introduction-grid p:not(.section-label) { max-width:480px; margin-bottom:20px; }
@@ -92,12 +86,10 @@
  .menu-toggle::after { display:none; }
  .nav-actions .btn { font-size:10px; padding:8px; gap:6px; }
  .opening-stage { min-height:680px; }
- .opening-lens { top:33%; width:min(48vw,190px); }
  .opening-copy { bottom:115px; }
  .opening-title { font-size:clamp(40px,10vw,58px); }
  .opening-copy p { font-size:13px; max-width:290px; }
  .opening-footer { bottom:20px; gap:8px; }
- .opening-actions { gap:12px; }
  .scroll-cue { max-width:90px; }
  .introduction-grid { grid-template-columns:1fr; gap:24px; }
  .introduction-grid figure { padding:0; margin-left:12%; }
@@ -109,6 +101,111 @@
  .process-num { margin-bottom:12px; }
  .closing-scene { min-height:560px; }
 }
-@media(prefers-reduced-motion:reduce) { html { scroll-behavior:auto; } *,*::before,*::after { transition:none!important; } .opening-lens { display:none!important; } }
 /* HTML dimensions reserve space; CSS aspect ratios determine editorial crops. */
 .film-card-thumb,.gallery-item img { height:auto; object-fit:cover; }
+/* Mobile-first portfolio: quiet compositions and smaller, intentional crops. */
+.container { max-width:1280px; }
+.opening-stage { height:min(88svh,900px); min-height:560px; }
+.opening-copy { bottom:92px; max-width:740px; }
+.opening-title { font-size:clamp(48px,5.6vw,82px); }
+.opening-footer { bottom:20px; }
+.featured-films-grid { grid-template-columns:repeat(2,minmax(0,1fr)); gap:44px 32px; }
+.film-card-large { grid-column:1/-1; max-width:900px; width:100%; }
+.film-card-medium,.film-card-wide { grid-column:auto; margin:0; }
+.film-card-thumb,.film-card-medium .film-card-thumb { aspect-ratio:16/9; height:auto; }
+.film-card-overlay { padding:14px 0 18px; }
+.film-card-top { margin-bottom:8px; }
+.introduction-grid img { aspect-ratio:5/4; }
+.closing-scene { min-height:480px; }
+.service-img-wrap img { height:auto; aspect-ratio:3/2; }
+@media(max-width:960px) {
+ .section,#featured-films,#travel-section { padding-block:64px; }
+ .masonry-gallery { grid-template-columns:repeat(2,minmax(0,1fr)); gap:28px 20px; }
+ .masonry-gallery .gallery-item:nth-child(n),.masonry-gallery.is-filtered .gallery-item { grid-column:auto; margin:0; }
+ .masonry-gallery .gallery-item img { aspect-ratio:4/5; height:auto; }
+ .masonry-gallery .gallery-item:nth-child(4n+1) img,.masonry-gallery .gallery-item:nth-child(4n+4) img { aspect-ratio:1; }
+ .studio-image-col { align-self:start; }
+}
+@media(max-width:600px) {
+ :root { --gutter:20px; }
+ body { font-size:14px; }
+ .section,#featured-films,#travel-section { padding-block:48px; }
+ .section-meta { margin-bottom:18px; }
+ .section-title,.studio-quote,.introduction-grid h2 { font-size:36px; line-height:1.08; }
+ .section-desc { margin-bottom:26px; }
+ .section-label { font-size:10px; letter-spacing:.1em; }
+ .opening-stage { height:82svh; min-height:500px; max-height:680px; }
+ .opening-photo { object-position:50% 42%; }
+ .opening-copy { bottom:72px; }
+ .opening-title { font-size:clamp(40px,10.5vw,54px); margin-bottom:16px; }
+ .opening-copy p { line-height:1.7; max-width:300px; margin-bottom:12px; }
+ .opening-footer { bottom:16px; }
+ .scroll-cue { max-width:none; }
+ .nav-container { height:68px; }
+ .mobile-nav { top:68px; }
+ .brand-mark { width:34px; height:44px; }
+ .brand-logo-img { width:48px; height:54px; margin-top:-5px; }
+ .brand-name { font-size:10px; letter-spacing:0; }
+ .nav-actions .btn { min-height:44px; }
+ .menu-toggle { min-height:44px; }
+ .introduction-grid { gap:24px; }
+ .introduction-grid h2 { margin:18px 0; }
+ .introduction-grid figure { margin:0; }
+ .introduction-grid img { aspect-ratio:3/2; max-height:260px; }
+ .introduction-grid figcaption { margin-top:10px; }
+ .featured-films-grid { display:grid; grid-template-columns:1fr; gap:28px; }
+ .film-card-large,.film-card-medium,.film-card-wide { grid-column:1; margin:0; width:100%; }
+ .film-card-thumb,.film-card-medium .film-card-thumb { aspect-ratio:16/9; max-height:250px; }
+ .film-card-bottom h3 { font-size:27px; margin-bottom:6px; }
+ .film-card-top { margin-bottom:4px; }
+ .film-play-trigger { width:36px; height:36px; font-size:15px; }
+ .film-meta-details { font-size:10px; letter-spacing:0; }
+ .gallery-filter-bar { gap:0 14px; margin-bottom:18px; }
+ .filter-btn { font-size:12px; min-height:44px; padding:10px 0; }
+ .gallery-status { margin-bottom:18px; }
+ .masonry-gallery { gap:22px 12px; }
+ .masonry-gallery .gallery-item:nth-child(n),.masonry-gallery.is-filtered .gallery-item { grid-column:auto; margin:0; }
+ .masonry-gallery .gallery-item img { aspect-ratio:4/5; max-height:240px; height:auto; }
+ .gallery-item-overlay { display:block; padding-top:10px; }
+ .gallery-caption-tag { display:block; font-size:9px; letter-spacing:.03em; margin-bottom:3px; }
+ .gallery-caption-title { display:block; font-size:12px; line-height:1.45; }
+ .studio-grid { display:flex; flex-direction:column; gap:28px; }
+ .studio-content-col { order:0; padding:0; }
+ .studio-image-col { order:1; width:66%; max-width:240px; margin:0; }
+ .studio-image-card > .cinema-frame { aspect-ratio:4/5; max-height:280px; }
+ .studio-image-card .cinema-image { position:static; width:100%; height:100%; }
+ .studio-badge { padding:12px 0 0; }
+ .studio-badge-val { font-size:14px; }
+ .studio-signature { margin-top:18px; padding-top:0; }
+ .service-card { grid-template-columns:112px minmax(0,1fr); gap:18px; padding-block:24px; align-items:start; }
+ .service-img-wrap { grid-column:1; }
+ .service-img-wrap img { width:100%; height:auto; aspect-ratio:4/5; }
+ .service-body { grid-column:2; padding:0; }
+ .service-number { margin-bottom:8px; }
+ .service-title { font-size:25px; margin-bottom:10px; }
+ .service-desc { font-size:13px; line-height:1.65; margin-bottom:12px; }
+ .service-body .btn { min-height:44px; font-size:10px; }
+ .service-price-note { margin-bottom:10px; }
+ .process-timeline { margin-top:28px; }
+ .process-step { padding-bottom:22px; }
+ .closing-scene { min-height:360px; }
+ .closing-copy { padding:44px 20px; }
+ .closing-copy h2 { font-size:44px; margin-bottom:20px; }
+ .closing-copy p { margin-bottom:14px; }
+ .closing-actions { gap:8px 24px; }
+ .page-intro { padding-top:36px; }
+ .page-intro h1,.studio-content-col h1,.contact-info-col h1 { font-size:40px; }
+ .contact-direct-cards { margin-block:24px; }
+ .contact-card-item { padding-block:14px; }
+ .footer-top { padding-bottom:28px; gap:24px; }
+ .site-footer { padding-top:36px; }
+ .footer-brand-logo { width:50px; height:60px; margin-bottom:16px; }
+}
+@media(max-width:360px) {
+ :root { --gutter:16px; }
+ .brand-logo { gap:4px; }
+ .brand-name { font-size:9px; }
+ .nav-actions .btn { font-size:9px; padding:8px 6px; }
+ .nav-container,.nav-actions { gap:6px; }
+ .service-card { grid-template-columns:90px minmax(0,1fr); gap:14px; }
+}

@@ -1,5 +1,10 @@
 document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('.current-year').forEach(el => { el.textContent = new Date().getFullYear(); });
+  const header = document.querySelector('.site-header');
+  let headerFrame = 0;
+  const updateHeader = () => { headerFrame = 0; header?.classList.toggle('is-scrolled', window.scrollY > 40); };
+  window.addEventListener('scroll', () => { if (!headerFrame) headerFrame = requestAnimationFrame(updateHeader); }, { passive: true });
+  updateHeader();
   const toggle = document.querySelector('.menu-toggle');
   const menu = document.querySelector('.mobile-nav');
   if (!toggle || !menu) return;

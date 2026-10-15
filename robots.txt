@@ -1,4 +1,2 @@
 User-agent: *
 Allow: /
-
-Sitemap: https://adarshpadval.github.io/mh09rs.films/sitemap.xml
