@@ -1,0 +1,62 @@
+[
+  {
+    "slug": "aarya-and-vihaan",
+    "title": "Aarya & Vihaan",
+    "location": "Kolhapur",
+    "kind": "The wedding day",
+    "cover": "film-story-01",
+    "description": "A day told through familiar faces, thoughtful details and the joy of being together.",
+    "images": [
+      "film-story-01",
+      "gallery-wed-01",
+      "gallery-prewed-01",
+      "gallery-celeb-01",
+      "film-story-03",
+      "gallery-wed-02",
+      "gallery-celeb-02",
+      "gallery-wed-03"
+    ],
+    "demo": true,
+    "video": "assets/videos/demo-flower.mp4"
+  },
+  {
+    "slug": "meera-and-ishaan",
+    "title": "Meera & Ishaan",
+    "location": "Western Ghats",
+    "kind": "Before the wedding",
+    "cover": "film-story-02",
+    "description": "Time to slow down. A story inspired by open landscapes, quiet conversations and the promise of a new beginning.",
+    "images": [
+      "film-story-02",
+      "gallery-prewed-01",
+      "gallery-prewed-02",
+      "travel-amba-ghat",
+      "gallery-celeb-01",
+      "film-story-03",
+      "travel-barki",
+      "gallery-wed-01"
+    ],
+    "demo": true,
+    "video": "assets/videos/demo-flower.mp4"
+  },
+  {
+    "slug": "tara-and-kabir",
+    "title": "Tara & Kabir",
+    "location": "Pune",
+    "kind": "A celebration together",
+    "cover": "film-story-03",
+    "description": "The little details and the bigger feelings. A celebration remembered through light, movement and the people who matter.",
+    "images": [
+      "film-story-03",
+      "gallery-celeb-01",
+      "gallery-celeb-02",
+      "gallery-wed-01",
+      "film-story-02",
+      "gallery-prewed-01",
+      "gallery-wed-03",
+      "film-story-01"
+    ],
+    "demo": true,
+    "video": "assets/videos/demo-flower.mp4"
+  }
+]

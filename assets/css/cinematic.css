@@ -209,3 +209,31 @@
  .nav-container,.nav-actions { gap:6px; }
  .service-card { grid-template-columns:90px minmax(0,1fr); gap:14px; }
 }
+/* Story collections and an on-demand screening room. */
+.hero-links { display:flex; align-items:center; flex-wrap:wrap; gap:12px 28px; }
+.hero-links button { background:transparent; border:0; border-bottom:1px solid; cursor:pointer; }
+.demo-note { font-size:11px; line-height:1.6; max-width:580px; color:var(--text-muted); margin-bottom:28px; }
+#featured-films .demo-note { color:#c6c1b7; }
+.service-delivery { max-width:440px; font-size:13px; margin:16px 0; }
+.service-enquiry { max-width:760px; text-align:center; }
+.service-enquiry h2 { margin:20px 0; }
+.service-enquiry p { margin-bottom:28px; }
+.film-dialog { inset:0; margin:auto; width:min(100% - 32px,1100px); max-height:90svh; overflow:auto; border:0; padding:28px; background:#111210; color:#F7F5F0; }
+.film-dialog::backdrop { background:rgba(0,0,0,.88); }
+.film-dialog-header { display:flex; align-items:center; justify-content:space-between; gap:20px; margin-bottom:24px; }
+.film-dialog-header .section-label { color:#c6ac85; margin-bottom:8px; }
+.film-dialog h2 { font-size:32px; }
+.film-close { background:transparent; color:inherit; border:1px solid #77766f; width:44px; height:44px; flex-shrink:0; font-size:28px; }
+.film-dialog video { display:block; width:100%; max-height:64svh; aspect-ratio:16/9; background:#000; }
+.film-disclaimer,.film-error { font-size:12px; color:#c6c1b7; margin-top:16px; }
+@media(max-width:600px) {
+ .hero-links { gap:4px 20px; }
+ .hero-links .text-link { font-size:11px; gap:12px; }
+ .film-dialog { padding:18px; width:calc(100% - 20px); }
+ .film-dialog h2 { font-size:26px; }
+ .film-dialog-header { margin-bottom:18px; }
+}
+
+button.film-card { width:100%; border:0; padding:0; text-align:left; background:transparent; color:inherit; font:inherit; }
+.film-card-overlay,.film-card-bottom { display:block; }
+.film-title { display:block; font:500 clamp(27px,2.3vw,36px)/1.08 var(--font-serif); margin-bottom:10px; letter-spacing:-.025em; }

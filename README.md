@@ -35,3 +35,11 @@ Existing showcase photos, including the founder portrait, remain provisional. Re
 ## Verification
 
 Run `node .cinematic-qa.cjs` with Playwright available at the path configured in that file and Microsoft Edge installed. The test starts and closes its own local server. Checks cover all five routes at 320, 390, 768, 1024, and 1440 pixels: overflow, heading count, mobile image height, local links and fragments, static hero, filters, lightbox, menu, mocked WhatsApp handoff, reduced motion, and the no-JavaScript hero. Screenshots are saved to the system temporary directory. External video playback and actual message delivery are not tested.
+
+## Story collections and film previews
+
+The homepage now leads directly into three selected stories, followed by photography, the studio introduction and enquiry. Services and packages are no longer repeated on the homepage. The services route uses concise service descriptions and one tailored-proposal enquiry.
+
+Featured films open directly in the homepage video dialog. No separate story pages are generated. Edit `assets/data/stories.json` and run `node scripts/build-stories.cjs` to update the homepage cards.
+
+`assets/js/films.js` opens a native dialog and loads the local demo MP4 only when requested. Closing or pressing Escape stops playback, releases the source, restores scrolling and returns focus. The small CC0 nature clip is explicitly labeled as demonstration footage. No invented client reviews are published. See ASSET-GUIDE.md for replacement instructions.

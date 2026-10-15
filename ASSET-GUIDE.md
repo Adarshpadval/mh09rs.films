@@ -57,3 +57,15 @@ The WhatsApp number is configured across HTML links and the JS engine:
 - [ ] Replace all temporary showcase photos, including the founder portrait, with approved studio assets and accurate captions.
 - [ ] Confirm the package inclusions, delivery times, and location descriptions.
 - [ ] Test the WhatsApp form with a sample inquiry on both desktop and mobile.
+
+## Replace the demo story collections
+
+The homepage film cards use `assets/data/stories.json`. Edit each card's `title`, `location`, `kind`, `cover`, `demo`, and `video`. The former story-page fields (`slug`, `description`, and `images`) are retained in the data file but are no longer used. Image entries are filenames without extensions from `assets/images/`; optimized variants are read from `assets/images/optimized/`.
+
+1. Replace the JPG photos and regenerate WebP variants with the existing image optimization script.
+2. Replace `assets/videos/demo-flower.mp4` with your approved MP4, or update each `video` path. The player currently accepts direct video files, not YouTube watch URLs.
+3. Run `node scripts/build-stories.cjs` to regenerate only the homepage film cards. No separate pages are created.
+4. Set `demo` to `false` only for approved collections; that changes the card label from sample story to wedding story. Update the homepage preview notice and video dialog disclaimer in `index.html`, then regenerate again.
+5. The homepage showreel uses the `data-film` attribute in `index.html`. Replace that path independently if your showreel differs from the story films.
+
+All three sample collections deliberately share one small test clip. Source: https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4 (MDN CC0 sample flower footage). It is not represented as studio wedding footage. Sample names, locations and photos are demonstration content. Client reviews remain an HTML comment until real approved reviews are supplied.
